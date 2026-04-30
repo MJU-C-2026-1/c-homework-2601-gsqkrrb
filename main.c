@@ -8,53 +8,71 @@
 
 int main()
 {
-  // --- 1. 변수 선언 (3가지 자료형, 7개의 변수) ---
-  char menuName[20] = "바니랄 라떼";       //[문자형] 메뉴 이름
-  char cheerUpMsg[50] = "오늘도 당신의 하루를 응원합니다!"; // [문자형] 응원 문구
+    char menuName[20];
+    int price, orderQty, userGrade;
+    float discountRate = 0.0f;
+    int totalPrice, finalPrice, cashReceived, change = 0;
 
-  int price = 5000;               // [정수형] 메뉴가격
-  int orderQty;                   // [정수형] 주문 수량
-  float discountRate = 0.05f;     // [실수형] 단골 할인율 (5%)
+    printf("========================\n");
+    printf("       CAFE 키오스크     \n");
+    printf("========================\n");
 
-  int totalPrice;                 // [정수형] 할인 전 총액
-  float finalPrice;               // [실수형] 할인 적용 후 최종 금액
-  int cashReceived;               // [정수형] 받은 현금
-  int change;                     // [정수형] 거스름돈
+    printf("\n[1단계: 주문 정보 입력]\n");
+    printf("주문하실 메뉴명을 입력하세요: ");
+    // %[^\n]s 를 사용하여 띄어쓰기를 허용합니다.
+    scanf(" %[^\n]s", menuName); 
 
-  // --- 2. 입출력 시작 ---
-  printf("====================================\n");
-  printf("        CAFE HOPE 키오스크 v1.2       \n");
-  printf("====================================\n");
-  printf("현재 주문 메뉴: %s (%d원)\n", menuName, price);
+    printf("메뉴의 가격을 입력하세요: ");
+    scanf("%d", &price);
+    printf("주문 수량을 입력하세요: ");
+    scanf("%d", &orderQty);
 
-  printf("주문하실 수량을 입력해 주세요: ");
-  scanf("%d", &orderQty);
+    printf("\n단골 등급을 선택하세요 (1:VVIP, 2:VIP, 3:일반): ");
+    scanf("%d", &userGrade);
 
-  // --- 3. 연산 과정 ---
-  totalPrice = price * orderQty;
-  // (1.0 - 할인율)을 곱해 최종 금액을 계산 (실수 연산)
-  finalPrice = totalPrice * (1.0f - discountRate);
+    if (userGrade == 1){
+        discountRate = 0.20f;
+    } else if (userGrade == 2) {
+        discountRate = 0.10f;
+    } else {
+        discountRate = 0.05f;
+    }
 
-  // --- 4. 주문 확인 및 결제 ---
-  printf("\n[주문 확인]\n");
-  printf("- 합계 금액:%d원\n" , finalPrice); // 소수점 없이 출력
-  printf("--------------------------\n");
+    totalPrice = price * orderQty;
+    finalPrice = (int)(totalPrice * (1.0f - discountRate));
+    
+    printf("\n[2단계: 결제 금액 계산]\n");
+    printf("- %s %d개의 총액: %d원\n", menuName, orderQty, totalPrice);
+    printf("- 할인율(%.0f%%) 적용 최종 금액: %d원\n", discountRate * 100, finalPrice);
 
-  printf("현금을 넣어주세요: ");
-  scanf("%d", &cashReceived);
+    printf("\n[3단계: 결제 진행]\n");
+    printf("현금을 넣어주세요: ");
+    scanf("%d", &cashReceived);
 
-  // 거스름돈 계산 (형변환 주의: 실수를 정수로 계산)
-  change = cashReceived -- (int)finalPrice
+    // 중괄호 위치를 정확히 맞췄습니다.
+    if (cashReceived >= finalPrice) {
+        change = cashReceived - finalPrice;
+        
+        if (change > 0 && finalPrice >= 50000){
+            printf("✨ 대량 주문 감사 서비스를 준비 중입니다. 잠시만 기다려주세요!\n");
+        }
+        
+        printf("\n============================\n");
+        printf("           최종 영수증       \n");
+        printf("============================\n");
+        printf(" 주문 메뉴 : %s\n", menuName);
+        printf(" 주문 수량 : %d개\n", orderQty);
+        printf(" 결제 금액 : %d원\n", finalPrice);
+        printf(" 받은 금액 : %d원\n", cashReceived);
+        printf(" 거스름돈  : %d원\n", change);
+        printf("-----------------------------\n");
+    }
+    else {
+        printf("\n[결제 실패] 금액이 %d원 부족합니다. 주문이 취소되었습니다.\n", finalPrice - cashReceived);
+    }
 
-  // --- 5. 최종 영수증 및 응원 문구 출력 ---
-  printf("\n[결제 완료]\n");
-  printf("- 받은 금액: %d원\n", cashReceived);
-  printf("- 거스름돈 : %d원\n", change);
-  printf("------------------------------------\n");
-
-  // 요청하신 응원 문구 출력
-  printf("%s\n", cheerUpMsg);
-  printf("====================================\n");
-
-  return 0;
+    printf("오늘도 당신의 하루를 응원합니다!\n");
+    printf("=============================\n");
+    
+    return 0;
 }
