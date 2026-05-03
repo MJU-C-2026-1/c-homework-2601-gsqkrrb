@@ -76,7 +76,7 @@
      이를 해결하기 위해 %s 대신 %[^\n]s를 사용하라는 AI의 추천을 받아 그대로 사용하였다.
 ### **📁 증빙 자료:**
   * [2차_AI협업캡처.pdf 첨부 완료](https://github.com/MJU-C-2026-1/c-homework-2601-gsqkrrb/blob/main/2%EC%B0%A8%EA%B3%BC%EC%A0%9C%20AI%20%ED%98%91%EC%97%85.pdf)
-  * 
+  * https://github.com/MJU-C-2026-1/c-homework-2601-gsqkrrb/blob/main/2%EC%B0%A8%EA%B3%BC%EC%A0%9C%20%EA%B2%B0%EA%B3%BC.PNG
 <br>
 
 ## 🟨 [3차 과제: V3.0] 무한 루프와 메뉴 시스템 (반복문) - 향후 작성 예정
