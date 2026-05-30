@@ -101,7 +101,7 @@
      
 ### **📁 증빙 자료:**
   * [3차_AI협업캡처.pdf 첨부 완료] https://github.com/MJU-C-2026-1/c-homework-2601-gsqkrrb/blob/main/3%EC%B0%A8%20ai%20%ED%98%91%EC%97%85.pdf
-  * [3차과제_실행결과.jpg]
+  * [3차과제_실행결과.jpg]https://github.com/MJU-C-2026-1/c-homework-2601-gsqkrrb/blob/main/3%EC%B0%A8%EA%B3%BC%EC%A0%9C%20%EA%B2%B0%EA%B3%BC.JPG
 <br>
 
 ### 🟥 [4차 과제: V4.0] 모듈화 및 데이터 확장 (배열과 함수) - 🌟최종 완성 -- 향후 작성 예정
