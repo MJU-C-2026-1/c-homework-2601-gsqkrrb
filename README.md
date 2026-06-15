@@ -122,6 +122,6 @@
      * **해결:** ...AI가 사용자의 잘못된 입력이나 엔터 키로 인해 scanf 입력 버퍼에 찌꺼기 데이터가 남아 발생하는 문제임을 진단하였고 메뉴 입력 직후 while(getchar() != '\n'); 코드를 배치하여 버퍼를 깨끗이 청소하도록 제어 흐름을 수정하고, 터미널 강제 종료 단축키(Ctrl + C)를 안내하여 프로그램 폭주 및 오작동 문제를 완벽히 해결함.
      
 ### **📁 증빙 자료:**
-  * [4차_AI협업캡처.pdf 첨부 완료]
+  * [4차_AI협업캡처.pdf 첨부 완료] https://github.com/MJU-C-2026-1/c-homework-2601-gsqkrrb/blob/main/4%EC%B0%A8%20%ED%98%91%EC%97%85.pdf
   * [4차과제_실행결과.jpg] https://github.com/MJU-C-2026-1/c-homework-2601-gsqkrrb/blob/main/4%EC%B0%A8%20%EA%B2%B0%EA%B3%BC.pdf
 <br>
