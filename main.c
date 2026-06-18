@@ -6,73 +6,116 @@
 
 #include <stdio.h>
 
-int main()
-{
-    char menuName[20];
-    int price, orderQty, userGrade;
-    float discountRate = 0.0f;
-    int totalPrice, finalPrice, cashReceived, change = 0;
+int menuNumber[5];
+int prices[5];
+int quantities[5];
+int finalPrices[5];
 
-    printf("========================\n");
-    printf("       CAFE 키오스크     \n");
-    printf("========================\n");
+int orderCount = 0;
 
-    printf("\n[1단계: 주문 정보 입력]\n");
-    printf("주문하실 메뉴명을 입력하세요: ");
-    // %[^\n]s 를 사용하여 띄어쓰기를 허용합니다.
-    scanf(" %[^\n]s", menuName); 
-
-    printf("메뉴의 가격을 입력하세요: ");
-    scanf("%d", &price);
-    printf("주문 수량을 입력하세요: ");
-    scanf("%d", &orderQty);
-
-    printf("\n단골 등급을 선택하세요 (1:VVIP, 2:VIP, 3:일반): ");
-    scanf("%d", &userGrade);
-
-    if (userGrade == 1){
-        discountRate = 0.20f;
-    } else if (userGrade == 2) {
-        discountRate = 0.10f;
-    } else {
-        discountRate = 0.05f;
+void printAllOrders(int arr[], int count){
+    if (count == 0){
+        printf("\n저장된 주문 내역이 없습니다.\n");
+        return;
     }
+    printf("\n==전체 주문 내역 조회 ==\n");
+    for(int i = 0; i<count; i++){
+        printf("[%d번주문] 메뉴번호: %d번 단가:%d원 수량:%d개 결제금액:%d원\n", i+1, menuNumber[i], prices[i], quantities[i], arr[i]);
+    }
+    printf("=================================\n");
+}
 
-    totalPrice = price * orderQty;
-    finalPrice = (int)(totalPrice * (1.0f - discountRate));
-    
-    printf("\n[2단계: 결제 금액 계산]\n");
-    printf("- %s %d개의 총액: %d원\n", menuName, orderQty, totalPrice);
-    printf("- 할인율(%.0f%%) 적용 최종 금액: %d원\n", discountRate * 100, finalPrice);
 
-    printf("\n[3단계: 결제 진행]\n");
-    printf("현금을 넣어주세요: ");
-    scanf("%d", &cashReceived);
+int calculateTotalSalesWithPointer(int *ptr, int count){
+    int sum = 0;
+    for(int i=0; i<count; i++){
+        sum = sum +*(ptr+i);
+    }
+    return sum;
+}
 
-    // 중괄호 위치를 정확히 맞췄습니다.
-    if (cashReceived >= finalPrice) {
-        change = cashReceived - finalPrice;
-        
-        if (change > 0 && finalPrice >= 50000){
-            printf("✨ 대량 주문 감사 서비스를 준비 중입니다. 잠시만 기다려주세요!\n");
+int main(){
+    int choice;
+
+    while(1){
+        printf("\n--- 카페 키오스크 ---\n");
+        printf("1. 주문 입력\n");
+        printf("2. 주문 내역 조회\n");
+        printf("3. 총 매출 조회\n");
+        printf("4. 프로그램 종료\n");
+        printf("선택: ");
+
+        if(scanf("%d", &choice) !=1){
+            printf("숫자만 입력 가능합니다!\n");
+
+            while(getchar() != '\n');
+            continue;
         }
         
-        printf("\n============================\n");
-        printf("           최종 영수증       \n");
-        printf("============================\n");
-        printf(" 주문 메뉴 : %s\n", menuName);
-        printf(" 주문 수량 : %d개\n", orderQty);
-        printf(" 결제 금액 : %d원\n", finalPrice);
-        printf(" 받은 금액 : %d원\n", cashReceived);
-        printf(" 거스름돈  : %d원\n", change);
-        printf("-----------------------------\n");
-    }
-    else {
-        printf("\n[결제 실패] 금액이 %d원 부족합니다. 주문이 취소되었습니다.\n", finalPrice - cashReceived);
+
+        
+
+        if (choice == 4){
+            printf("프로그램을 종료합니다.\n");
+            break;
+        }
+        if (choice == 1){
+            if (orderCount >= 5) {
+                printf("더 이상 주문을 저장할 수 없습니다! \n");
+                continue;
+            }
+
+            printf("\n[%d번째 주문 입력]\n", orderCount + 1);
+
+            printf("메뉴 번호 :");
+            scanf("%d", &menuNumber[orderCount]);
+
+            printf("가격: ");
+            scanf("%d", &prices[orderCount]);
+
+            printf("수량: ");
+            scanf("%d", &quantities[orderCount]);
+
+            int userGrade;
+            printf("등급(1.VVIP, 2:VIP, 3:일반): ");
+            scanf("%d", &userGrade);
+
+            float rate = 0.0f;
+            int total = prices[orderCount]*quantities[orderCount];
+
+            if(userGrade == 1){
+                rate = 0.20f;
+            } else if (userGrade == 2){
+                rate = 0.10f;
+            } else{
+                rate = 0.05f;
+            }
+
+            int amount = (int)(total*(1.0f - rate));
+            finalPrices[orderCount]= amount;
+
+            int cash;
+            printf("최종 금액: %d원\n현금입력: ", amount);
+            scanf("%d", &cash);
+
+            if (cash >= amount){
+                printf("결제 완료! 거스름돈: %d원\n", cash - amount);
+                orderCount++;
+            }else {
+                printf("결제 실패: 금액이 부족하여 주문이 취소되었습니다.\n");
+            }
+        }
+        else if (choice==2){
+            printAllOrders(finalPrices, orderCount);
+        }
+        else if ( choice == 3) {
+            int totalSales = calculateTotalSalesWithPointer(finalPrices, orderCount);
+            printf("\n현재 누적 총 매출: %d원\n", totalSales);
+        }
+        else{
+            printf("잘못된 선택입니다.\n");
+        }
     }
 
-    printf("오늘도 당신의 하루를 응원합니다!\n");
-    printf("=============================\n");
-    
     return 0;
 }
